@@ -1,7 +1,7 @@
 import './App.css'
 import PlayCircleIcon from '@mui/icons-material/PlayCircle';
 import PauseCircleIcon from '@mui/icons-material/PauseCircle';
-import { Box, TextField, Typography } from '@mui/material';
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { ChangeEvent, useState } from 'react';
 
 function App() {
@@ -9,7 +9,14 @@ function App() {
 
   const onHandleSubmit = (event: ChangeEvent<HTMLFormElement>): void => {
     event.preventDefault();
-    console.log(textToSpeech);
+    onTransformTextToSpeech();
+  }
+
+  const onTransformTextToSpeech = () => {
+    const speech = new SpeechSynthesisUtterance();
+    speech.text = textToSpeech;
+    speech.lang = "es";
+    window.speechSynthesis.speak(speech);
   }
 
   return (
@@ -23,8 +30,12 @@ function App() {
         </Box>
       </form>
       <Box mt={2}>
-        <PlayCircleIcon />
-        <PauseCircleIcon />
+        <Button onClick={onTransformTextToSpeech}>
+          <PlayCircleIcon />
+        </Button>
+        <Button>
+          <PauseCircleIcon />
+        </Button>
       </Box>
 
     </>
